@@ -6,27 +6,28 @@ import (
 )
 
 type Config struct {
-	DBName        string
-	DBUser        string
-	DBPass        string
-	DBHost        string
-	DBPort        string
-	WebServerPort string
+	DBDriver      string `mapstructure:"DB_DRIVER"`
+	DBName        string `mapstructure:"DB_NAME"`
+	DBUser        string `mapstructure:"DB_USER"`
+	DBPass        string `mapstructure:"DB_PASS"`
+	DBHost        string `mapstructure:"DB_HOST"`
+	DBPort        string `mapstructure:"DB_PORT"`
+	WebServerPort string `mapstructure:"WEB_SERVER_PORT"`
 	JWTSecret     string
-	JWTExpiration int
+	JWTExpiration int `mapstructure:"JWT_EXPIRATION"`
 	TokenAuth     *jwtauth.JWTAuth
 }
 
 const (
-	DEBUG = true
+	DEBUG = false
 )
 
 var config *Config
 
 func GetConfig(path string) (*Config, error) {
-	// TODO: Read config file and return config struct
+
 	viper.SetConfigName("goham_config")
-	viper.SetConfigType(".env")
+	viper.SetConfigType("env")
 	viper.AddConfigPath(path)
 
 	if DEBUG {
